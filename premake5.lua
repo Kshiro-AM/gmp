@@ -11,6 +11,7 @@ workspace "gmp"
 
     IncludeDir = {}
     IncludeDir["Eigen"] = "Application/vendor/eigen"
+    IncludeDir["libigl"] = "Application/vendor/libigl/include"
 
 project "Application"
     location "Application"
@@ -29,7 +30,8 @@ project "Application"
 
     includedirs 
     {
-        IncludeDir["Eigen"]
+        IncludeDir["Eigen"],
+        IncludeDir["libigl"]
     }
 
     links

@@ -1,9 +1,14 @@
 #include <iostream>
 #include <Eigen/Core>
 
+#include <igl/readOFF.h>
+
 int main() {
-	Eigen::Matrix<double, 3, 3> m;
-	std::cout << m << std::endl;
+	Eigen::MatrixXd V;
+	Eigen::MatrixXi F;
+
+	igl::readOFF("asset/bumpy.off", V, F);
+	std::cout << V << std::endl;
 
 	return 0;
 }
