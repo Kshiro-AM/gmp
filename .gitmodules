@@ -4,3 +4,9 @@
 [submodule "Application/vendor/libigl"]
 	path = Application/vendor/libigl
 	url = https://github.com/libigl/libigl.git
+[submodule "Application/vendor/glad"]
+	path = Application/vendor/glad
+	url = https://github.com/Kshiro-AM/glad.git
+[submodule "Application/vendor/glfw"]
+	path = Application/vendor/glfw
+	url = https://github.com/Kshiro-AM/glfw.git
