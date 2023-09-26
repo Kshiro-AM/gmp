@@ -7,3 +7,15 @@
 [submodule "Application/vendor/glfw"]
 	path = Application/vendor/glfw
 	url = https://github.com/Kshiro-AM/glfw.git
+[submodule "Application/vendor/libigl"]
+	path = Application/vendor/libigl
+	url = https://github.com/Kshiro-AM/libigl.git
+[submodule "Application/vendor/stb"]
+	path = Application/vendor/stb
+	url = https://github.com/Kshiro-AM/stb.git
+[submodule "Application/vendor/imgui"]
+	path = Application/vendor/imgui
+	url = https://github.com/Kshiro-AM/imgui.git
+[submodule "Application/vendor/ImGuizmo"]
+	path = Application/vendor/ImGuizmo
+	url = https://github.com/Kshiro-AM/ImGuizmo.git

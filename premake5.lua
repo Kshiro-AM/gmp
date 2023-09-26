@@ -11,12 +11,18 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir = {}
 IncludeDir["Eigen"] = "Application/vendor/eigen"
+IncludeDir["stb"] = "Application/vendor/stb"
+IncludeDir["imgui"] = "Application/vendor/imgui"
+IncludeDir["ImGuizmo"] = "Application/vendor/ImGuizmo"
 IncludeDir["libigl"] = "Application/vendor/libigl/include"
 IncludeDir["glad"] = "Application/vendor/glad/include"
 IncludeDir["GLFW"] = "Application/vendor/glfw/include"
 
 include "Application/vendor/glad"
 include "Application/vendor/glfw"
+include "Application/vendor/libigl"
+include "Application/vendor/imgui"
+include "Application/vendor/ImGuizmo"
 
 project "Application"
     location "Application"
@@ -39,13 +45,25 @@ project "Application"
         "%{IncludeDir.glad}",
         "%{IncludeDir.GLFW}",
         "%{IncludeDir.Eigen}",
-        "%{IncludeDir.libigl}"
+        "%{IncludeDir.libigl}",
+        "%{IncludeDir.imgui}",
+        "%{IncludeDir.stb}",
+        "%{IncludeDir.ImGuizmo}",
     }
 
     links
     {
         "glad",
-        "GLFW"
+        "GLFW",
+        "libigl",
+        "imgui",
+        "ImGuizmo",
+    }
+
+    defines
+    {
+        "IGL_STATIC_LIBRARY",
+        "WIN32",
     }
 
     filter "system:windows"
@@ -54,7 +72,7 @@ project "Application"
         staticruntime "On"
 
     filter { "system:windows", "action:vs*" }        
-        buildoptions {"/bigobj"}
+        --buildoptions {"/bigobj"}
 
     filter "configurations:Debug"
         symbols "On"
