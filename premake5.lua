@@ -35,9 +35,9 @@ project "Application"
 
     files
     {
-        "%{prj.name}/src/task2/**.cpp",
-        "%{prj.name}/src/task2/**.hpp",
-        "%{prj.name}/src/task2/**.h"
+        "%{prj.name}/src/task3/**.cpp",
+        "%{prj.name}/src/task3/**.hpp",
+        "%{prj.name}/src/task3/**.h"
     }
 
     includedirs 
