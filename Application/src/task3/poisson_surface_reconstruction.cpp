@@ -1,5 +1,11 @@
 #include "poisson_surface_reconstruction.h"
-#include <igl/copyleft/marching_cubes.h>
+
+#include "fd_interpolate.h"
+#include "fd_grad.h"
+
+#include "igl/marching_cubes.h"
+#include "igl/cat.h"
+
 #include <algorithm>
 
 void poisson_surface_reconstruction(
@@ -48,10 +54,36 @@ void poisson_surface_reconstruction(
 	// Add your code here
 	////////////////////////////////////////////////////////////////////////////
 
+	Eigen::RowVector3d xCorner = corner + Eigen::RowVector3d(h / 2, 0, 0);
+	Eigen::RowVector3d yCorner = corner + Eigen::RowVector3d(0, h / 2, 0);
+	Eigen::RowVector3d zCorner = corner + Eigen::RowVector3d(0, 0, h / 2);
+	Eigen::SparseMatrix<double> Wx, Wy, Wz;
+	fd_interpolate(nx - 1, ny, nz, h, xCorner, P, Wx);
+	fd_interpolate(nx, ny - 1, nz, h, yCorner, P, Wy);
+	fd_interpolate(nx, ny, nz - 1, h, zCorner, P, Wz);
+	
+	Eigen::VectorXd vx, vy, vz;
+	Eigen::VectorXd vxy, v;
+	vx = Wx.transpose() * N.col(0);
+	vy = Wy.transpose() * N.col(1);
+	vz = Wz.transpose() * N.col(2);
+	igl::cat(1, vx, vy, vxy);
+	igl::cat(1, vxy, vz, v);
+
+	Eigen::SparseMatrix<double> G;
+	fd_grad(nx, ny, nz, h, G);
+
+	Eigen::BiCGSTAB<Eigen::SparseMatrix<double>> solver(G.transpose() * G);
+	g = solver.solve(G.transpose() * v);
+
+	Eigen::SparseMatrix<double> W;
+	fd_interpolate(nx, ny, nz, h, corner, P, W);
+	double sigma = (W * g).sum() / n;
 	////////////////////////////////////////////////////////////////////////////
 	// Run black box algorithm to compute mesh from implicit function: this
 	// function always extracts g=0, so "pre-shift" your g values by -sigma
 	////////////////////////////////////////////////////////////////////////////
-	// TODO: Check this function and replace
-	//igl::copyleft::marching_cubes(g, x, nx, ny, nz, V, F);
+	// TODO: Check if marching_cubes work without copyleft
+	igl::marching_cubes(g, x, nx, ny, nz, sigma, V, F);
 }
+

@@ -18,6 +18,8 @@
 //     m = nx*ny*(nz-1)  otherwise (if dir = 2)
 //
 // See also: fd_partial_derivative.h
+
+
 void fd_partial_derivative(
   const int nx,
   const int ny,

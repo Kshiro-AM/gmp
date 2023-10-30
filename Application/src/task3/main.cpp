@@ -9,6 +9,8 @@
 #include <vector>
 #include <cstdlib>
 
+#include "fd_interpolate.h"
+
 int main(int argc, char* argv[])
 {
 	// Load in points + normals from .pwn file
@@ -18,7 +20,7 @@ int main(int argc, char* argv[])
 		std::vector<std::vector<double> > vD;
 		std::string line;
 		std::fstream in;
-		in.open(argc > 1 ? argv[1] : "asset/hand.pwn");
+		in.open(argc > 1 ? argv[1] : "asset/elephant.pwn");
 		while (in)
 		{
 			std::getline(in, line);
@@ -33,7 +35,6 @@ int main(int argc, char* argv[])
 		P = D.leftCols(3);
 		N = D.rightCols(3);
 	}
-
 	// Reconstruct mesh
 	Eigen::MatrixXd V;
 	Eigen::MatrixXi F;
